@@ -20,7 +20,7 @@ userSchema.methods.generateJWT = function () {
       email: this.email,
       id: this._id,
     },
-    config.JWT_SECRET,
+    process.env.JWT_SECRET,
     { expiresIn: "1h" }
   );
 };
@@ -35,4 +35,4 @@ userSchema.methods.toAuthJSON = function () {
   };
 };
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);

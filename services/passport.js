@@ -18,20 +18,22 @@ passport.use(
       passwordField: "password",
     },
     (email, password, done) => {
-      User.findOne({ email }, function (err, user) {
-        if (err) {
-          return done(err);
-        }
-        if (!user) {
-          return done(null, false);
-        }
+      User.findOne({ email })
+        .populate("role")
+        .exec((err, user) => {
+          if (err) {
+            return done(err);
+          }
+          if (!user) {
+            return done(null, false);
+          }
 
-        if (user.newComparePassword(password) === true) {
-          return done(null, user);
-        } else {
-          return done(null, false);
-        }
-      });
+          if (user.comparePassword(password) === true) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        });
     }
   )
 );
@@ -39,8 +41,9 @@ passport.use(
 passport.use(
   new JwtStrategy(jwtOptions, function (payload, done) {
     console.log(payload);
-    if (payload.type && payload.type === "bouser") {
-      BackOfficeUser.findById(payload.id, function (err, user) {
+    User.findById(payload.id)
+      .populate("role")
+      .exec((err, user) => {
         if (err) {
           return done(err, false);
         }
@@ -51,18 +54,5 @@ passport.use(
           done(null, false);
         }
       });
-    } else {
-      User.findById(payload.id, function (err, user) {
-        if (err) {
-          return done(err, false);
-        }
-
-        if (user) {
-          done(null, user);
-        } else {
-          done(null, false);
-        }
-      });
-    }
   })
 );
