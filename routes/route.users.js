@@ -12,5 +12,6 @@ router.get(
     AuthCtrl.authenticateAndPermissions(req, res, "READ_USERS", next),
   UsersCtrl.listUsers
 );
+router.get("/me", AuthCtrl.onlyAuthUser, UsersCtrl.getMe);
 
 module.exports = router;

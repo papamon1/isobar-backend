@@ -47,3 +47,12 @@ exports.listUsers = function (req, res) {
       return res.status(200).json({ users });
     });
 };
+
+exports.getMe = function (req, res) {
+  User.findById(req.user._doc._id)
+    .populate("Role")
+    .exec((errors, users) => {
+      if (errors) return res.status(422).send({ errors });
+      return res.status(200).json({ users });
+    });
+};
