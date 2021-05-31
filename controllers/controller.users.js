@@ -41,7 +41,7 @@ exports.login = function (req, res, next) {
 
 exports.listUsers = function (req, res) {
   User.find({})
-    .populate("Role")
+    .populate("role")
     .exec((errors, users) => {
       if (errors) return res.status(422).send({ errors });
       return res.status(200).json({ users });
@@ -50,7 +50,7 @@ exports.listUsers = function (req, res) {
 
 exports.getMe = function (req, res) {
   User.findById(req.user._doc._id)
-    .populate("Role")
+    .populate("role")
     .exec((errors, users) => {
       if (errors) return res.status(422).send({ errors });
       return res.status(200).json({ users });
