@@ -4,7 +4,8 @@ const { eventNames } = require("../models/model.posts");
 
 // Had also this version with our own model, but after all, decided to query
 // a free sample service, so we can have an example of calling a third service
-// from the backend. The method below will return a sample post from our database
+// from the backend. I know it was not on the assignment description.
+// The method below would return a sample post from our database
 
 // exports.getPosts = (req, res) => {
 //   Post.find({})

@@ -38,3 +38,12 @@ exports.login = function (req, res, next) {
     }
   })(req, res, next);
 };
+
+exports.listUsers = function (req, res) {
+  User.find({})
+    .populate("Role")
+    .exec((errors, users) => {
+      if (errors) return res.status(422).send({ errors });
+      return res.status(200).json({ users });
+    });
+};

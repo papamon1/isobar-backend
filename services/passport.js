@@ -40,7 +40,6 @@ passport.use(
 
 passport.use(
   new JwtStrategy(jwtOptions, function (payload, done) {
-    console.log(payload);
     User.findById(payload.id)
       .populate("role")
       .exec((err, user) => {
