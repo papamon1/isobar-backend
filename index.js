@@ -20,10 +20,12 @@ mongoose
 // import routes file
 const userRoutes = require("./routes/route.users");
 const postRoutes = require("./routes/route.posts");
+const  cors = require("cors");
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 // use and map the routes
 app.use("/api/v1/users", userRoutes);
